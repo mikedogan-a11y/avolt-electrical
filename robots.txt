@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_build/
+
+Sitemap: https://mikedogan-a11y.github.io/avolt-electrical/sitemap.xml
