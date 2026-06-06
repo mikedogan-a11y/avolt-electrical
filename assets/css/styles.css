@@ -370,11 +370,73 @@ h1, h2, h3, h4 { line-height: 1.15; letter-spacing: -0.02em; font-weight: 800; c
 .err-page p { margin: 14px auto 0; max-width: 460px; color: #94a3b8; }
 .err-page .actions { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-/* ---------- reveal animation ---------- */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+/* ===========================================================
+   Motion — restrained, enhancement-only.
+   Content is fully readable without JS: the hidden states only
+   apply once the inline <script> adds `.js` to <html>.
+   =========================================================== */
+
+/* scroll reveal (+ JS-applied stagger via transition-delay) */
+.reveal { transition: opacity .55s var(--ease), transform .55s var(--ease); }
+.js .reveal { opacity: 0; transform: translateY(20px); }
 .reveal.in { opacity: 1; transform: none; }
+
+/* hero entrance on load — pure CSS animation, so it can never gate content
+   (auto-plays without main.js; the resting state is fully visible) */
+@keyframes heroIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.js .hero .eyebrow,  .js .hero h1,  .js .hero .lead,
+.js .hero-actions,   .js .hero-trust,  .js .hero-card,
+.js .page-hero .crumb, .js .page-hero h1, .js .page-hero p {
+  animation: heroIn .55s var(--ease) both;
+}
+.js .hero .eyebrow      { animation-delay: .04s; }
+.js .hero h1            { animation-delay: .11s; }
+.js .hero .lead         { animation-delay: .19s; }
+.js .hero-actions       { animation-delay: .27s; }
+.js .hero-trust         { animation-delay: .35s; }
+.js .hero-card          { animation-delay: .24s; }
+.js .page-hero .crumb   { animation-delay: .04s; }
+.js .page-hero h1       { animation-delay: .11s; }
+.js .page-hero p        { animation-delay: .19s; }
+
+/* header condenses on scroll */
+.site-header { transition: box-shadow .3s var(--ease), background-color .3s var(--ease); }
+.site-header .nav { transition: height .3s var(--ease); }
+.site-header.scrolled { box-shadow: 0 8px 28px -16px rgba(15, 23, 42, .35); }
+.site-header.scrolled .nav { height: 60px; }
+.brand .mark { transition: width .3s var(--ease), height .3s var(--ease); }
+.site-header.scrolled .brand .mark { width: 33px; height: 33px; }
+
+/* one restrained 'electric' flourish — a very slow, very faint hero glow */
+.hero::before {
+  content: ""; position: absolute; inset: -15%; z-index: 0; pointer-events: none;
+  background: radial-gradient(360px 280px at 62% 32%, rgba(96, 165, 250, .16), transparent 62%);
+  animation: heroGlow 17s ease-in-out infinite alternate;
+}
+@keyframes heroGlow {
+  from { transform: translate(0, 0) scale(1); opacity: .45; }
+  to   { transform: translate(-5%, 3%) scale(1.14); opacity: .8; }
+}
+
+/* a single soft pulse on the mobile call button (runs twice, then stops) */
+.fab-call::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid var(--blue-glow); opacity: 0; pointer-events: none;
+}
+.fab-call.nudge::after { animation: fabPulse 1.3s ease-out 2; }
+@keyframes fabPulse {
+  from { opacity: .55; transform: scale(1); }
+  to   { opacity: 0; transform: scale(1.85); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal, .js .reveal,
+  .js .hero .eyebrow, .js .hero h1, .js .hero .lead,
+  .js .hero-actions, .js .hero-trust, .js .hero-card,
+  .js .page-hero .crumb, .js .page-hero h1, .js .page-hero p {
+    opacity: 1 !important; transform: none !important;
+  }
   html { scroll-behavior: auto; }
 }
 
