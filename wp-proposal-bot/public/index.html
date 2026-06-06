@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>MortgageMD — Proposal Builder</title>
+  <style>
+    :root { --brand:#5b5fc7; --ink:#1f2330; --muted:#6b7280; --line:#e5e7eb; --ok:#16a34a; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f3f4f6;color:var(--ink)}
+    .wrap{max-width:620px;margin:0 auto;padding:20px 16px 60px}
+    header{display:flex;align-items:center;gap:10px;margin:8px 0 4px}
+    .logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7aa7e6,#5b5fc7)}
+    h1{font-size:19px;margin:0}
+    p.sub{color:var(--muted);font-size:13px;margin:4px 0 20px}
+    label{display:block;font-size:13px;font-weight:600;margin:14px 0 5px}
+    input,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:15px;background:#fff}
+    textarea{min-height:220px;resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+    .modes{display:flex;gap:8px;margin-bottom:6px}
+    .modes button{flex:1;padding:9px;border:1px solid var(--line);background:#fff;border-radius:10px;font:inherit;font-weight:600;cursor:pointer;color:var(--muted)}
+    .modes button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+    .go{width:100%;margin-top:18px;padding:14px;border:none;border-radius:12px;background:var(--brand);color:#fff;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+    .go:disabled{opacity:.6}
+    .status{margin-top:16px;font-size:14px;min-height:22px}
+    .status.err{color:#b91c1c;white-space:pre-wrap}
+    .status.ok{color:var(--ok)}
+    .hint{font-size:12px;color:var(--muted);margin-top:4px}
+    a.dl{display:inline-block;margin-top:10px;font-weight:700;color:var(--brand)}
+    .spin{display:inline-block;width:15px;height:15px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:s .8s linear infinite;vertical-align:-2px;margin-right:7px}
+    @keyframes s{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><div class="logo"></div><h1>MortgageMD Proposal Builder</h1></header>
+    <p class="sub">Paste the proposal data, tap Generate. It logs into WordPress, builds the document, and gives you the PDF — no manual data entry.</p>
+
+    <label for="token">Access token</label>
+    <input id="token" type="password" placeholder="the secret you set up" autocomplete="off" />
+    <div class="hint">Stays on this device. Required so only you can run it.</div>
+
+    <label>Input</label>
+    <div class="modes">
+      <button id="m-json" class="active" type="button">Structured JSON</button>
+      <button id="m-text" type="button">Free-text notes</button>
+    </div>
+    <textarea id="payload" placeholder='Paste the JSON your Claude session produced…'></textarea>
+    <div class="hint" id="modehint">Recommended: paste the JSON object exactly as your Claude session outputs it.</div>
+
+    <button id="go" class="go" type="button">Generate proposal PDF</button>
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    var mode = "json";
+    var $ = function (id) { return document.getElementById(id); };
+    function setMode(m) {
+      mode = m;
+      $("m-json").classList.toggle("active", m === "json");
+      $("m-text").classList.toggle("active", m === "text");
+      $("payload").placeholder = m === "json"
+        ? "Paste the JSON your Claude session produced…"
+        : "Paste your free-text proposal notes — the AI will map them to the form…";
+      $("modehint").textContent = m === "json"
+        ? "Recommended: paste the JSON object exactly as your Claude session outputs it."
+        : "Needs an Anthropic API key configured on the server.";
+    }
+    $("m-json").onclick = function () { setMode("json"); };
+    $("m-text").onclick = function () { setMode("text"); };
+
+    // Remember the token between uses (this device only).
+    try { $("token").value = localStorage.getItem("mmd.token") || ""; } catch (e) {}
+
+    $("go").onclick = async function () {
+      var token = $("token").value.trim();
+      var payload = $("payload").value.trim();
+      var status = $("status");
+      status.className = "status";
+      if (!token) { status.className = "status err"; status.textContent = "Enter the access token."; return; }
+      if (!payload) { status.className = "status err"; status.textContent = "Paste the proposal data first."; return; }
+      try { localStorage.setItem("mmd.token", token); } catch (e) {}
+
+      $("go").disabled = true;
+      status.className = "status";
+      status.innerHTML = '<span class="spin"></span>Logging in and building the document… (20–60s)';
+
+      try {
+        var resp = await fetch("/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: token, mode: mode, payload: payload }),
+        });
+        if (!resp.ok) {
+          var msg = "Failed.";
+          try { msg = (await resp.json()).error || msg; } catch (e) {}
+          status.className = "status err"; status.textContent = msg;
+          return;
+        }
+        var blob = await resp.blob();
+        var url = URL.createObjectURL(blob);
+        status.className = "status ok";
+        status.innerHTML = '✓ Done. <a class="dl" href="' + url + '" download="proposal.pdf">Download / open the PDF</a>';
+      } catch (e) {
+        status.className = "status err"; status.textContent = "Network error: " + e.message;
+      } finally {
+        $("go").disabled = false;
+      }
+    };
+  </script>
+</body>
+</html>

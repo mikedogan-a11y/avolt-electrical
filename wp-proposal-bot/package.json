@@ -1,0 +1,18 @@
+{
+  "name": "wp-proposal-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Logs into the MortgageMD WordPress credit-proposal builder, fills the form from structured data, builds the document, and returns the PDF. Triggerable from phone or PC.",
+  "scripts": {
+    "start": "node server.js",
+    "run-once": "node run-once.js",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.69.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "playwright": "^1.48.0"
+  }
+}

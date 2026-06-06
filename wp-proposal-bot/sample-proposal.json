@@ -1,0 +1,112 @@
+{
+  "applicant": {
+    "name": "Alican Kartal",
+    "address": "8 Stuka Close, RABY NSW 2566",
+    "applyOnlineId": "MER1726168-CON",
+    "employmentStatus": "Self-Employed",
+    "grossAnnualIncome": "240000"
+  },
+  "household": {
+    "totalAnnualIncome": "$253,000",
+    "totalMonthlyLivingExpenses": "$5,375.00",
+    "totalLiabilities": "24200"
+  },
+  "funding": {
+    "required": {
+      "refinanceAmount": "643940",
+      "equityAccessSought": "103500"
+    },
+    "govFees": {
+      "mortgageRegistrationFee": "183",
+      "transferRegistrationFee": "183"
+    },
+    "lenderFees": {
+      "establishmentMonthlyAccount": "424",
+      "annualFee": "400",
+      "settlementOrLegalFee": "1000",
+      "dischargeFee": "350"
+    },
+    "available": {
+      "totalLoans": "750000"
+    }
+  },
+  "loans": [
+    {
+      "lender": "Resimac",
+      "productRecommended": "Yes",
+      "product": "SE Prime - Alt - doc",
+      "loanAmount": "646500",
+      "contractTerm": "30",
+      "interestRate": "6.92",
+      "monthlyRepayment": "4267",
+      "variableOrFixed": "Variable",
+      "repaymentType": "Principal & Interest",
+      "applicationFee": "399",
+      "monthlyFee": "25",
+      "annualFee": "500",
+      "features": {
+        "portability": "Yes",
+        "offsetAccount": "Yes",
+        "splitLoanFacility": "Yes",
+        "packageFacility": "No",
+        "redrawAllowed": "Yes",
+        "estimatedSecurity": "400",
+        "offsetAcctFee": "500",
+        "redrawFee": "0"
+      }
+    },
+    {
+      "lender": "Resimac",
+      "productRecommended": "Yes",
+      "product": "SE Prime - Alt - doc",
+      "loanAmount": "103500",
+      "contractTerm": "30",
+      "interestRate": "6.92",
+      "monthlyRepayment": "683",
+      "variableOrFixed": "Variable",
+      "repaymentType": "Principal & Interest",
+      "applicationFee": "0",
+      "monthlyFee": "0",
+      "annualFee": "0",
+      "features": {
+        "portability": "Yes",
+        "offsetAccount": "Yes",
+        "splitLoanFacility": "Yes",
+        "packageFacility": "No",
+        "redrawAllowed": "Yes",
+        "estimatedSecurity": "0",
+        "offsetAcctFee": "0",
+        "redrawFee": "0"
+      }
+    }
+  ],
+  "estimate": {
+    "commission": [
+      { "percent": "0.7", "dollar": "5250" },
+      { "percent": "0.25", "dollar": "156" }
+    ],
+    "feesApply": "Yes",
+    "financier": {
+      "establishmentMonth": "424",
+      "valuationFee": "400",
+      "settlementFee": "1000"
+    },
+    "referralFeesApply": "No",
+    "conflictOfInterest": "No"
+  },
+  "clientRO": {
+    "objectives": "Refinance the existing ANZ home loan and access equity against 8 Stuka Close, Raby to fund expansion of his business — structured as a refinance split and a separate equity split.",
+    "loanPurpose": "Refinance",
+    "loanTerm": "30",
+    "features": { "principalAndInterest": true },
+    "featuresMostImportant": "- Variable rate — flexibility to refinance out to a prime lender later without break costs.\n- P&I — standard repayment, continues to build equity.\n- Redraw (offset if available on the product) — to hold/manage the equity funds and business cashflow.",
+    "refinanceCostBenefit": "Rate increases on refinance (ANZ 5.79% to ResZed 6.92%), so there is no rate saving on the refinanced balance. The benefit is access to equity for business expansion that prime lenders cannot provide on current income verification. The higher interim rate is the trade-off for achieving the equity objective now, with the intention to refinance to a sharper rate once financials season.",
+    "lenderPreferences": "Client initially preferred a major bank (ANZ/AMP/St George). These could not deliver the equity on current servicing, so an Alt Doc specialist was required; no remaining preference once prime was ruled out.",
+    "retirementAge": "75",
+    "loanRepaidBy": { "ongoingIncome": true },
+    "debtConsolidationConsiderations": "No",
+    "anticipatedChanges": "No",
+    "assumptions": "No",
+    "additionalInfo": "- Equity is for business purposes — please check whether a Business Purpose Declaration applies to the equity split.\n- Existing car loan (~$900/mth, ~2 yrs remaining) retained.\n- Exit/review: refinance to prime once two years of current financials are available."
+  }
+}
