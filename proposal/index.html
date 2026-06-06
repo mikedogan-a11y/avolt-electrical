@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Proposal Generator</title>
+  <style>
+    :root {
+      --brand: #1d4ed8;
+      --brand-dark: #1e3a8a;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --bg: #f1f5f9;
+      --paper: #ffffff;
+      --ok: #16a34a;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    /* ---------- App chrome (hidden when printing) ---------- */
+    .app {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 0;
+      min-height: 100vh;
+    }
+    .panel {
+      background: #fff;
+      border-right: 1px solid var(--line);
+      padding: 24px;
+      overflow-y: auto;
+      max-height: 100vh;
+      position: sticky;
+      top: 0;
+    }
+    .panel h1 {
+      font-size: 18px;
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel .sub { color: var(--muted); font-size: 13px; margin: 0 0 20px; }
+
+    fieldset {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 14px 4px;
+      margin: 0 0 16px;
+    }
+    legend {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--brand);
+      padding: 0 6px;
+    }
+    label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin: 0 0 4px; }
+    .field { margin-bottom: 12px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    input, textarea, select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 14px;
+      background: #fff;
+      color: var(--ink);
+    }
+    input:focus, textarea:focus, select:focus { outline: 2px solid var(--brand); border-color: var(--brand); }
+    textarea { resize: vertical; min-height: 64px; }
+
+    /* line items editor */
+    .items-head, .item-row {
+      display: grid;
+      grid-template-columns: 1fr 56px 84px 84px 28px;
+      gap: 6px;
+      align-items: center;
+    }
+    .items-head { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+    .item-row { margin-bottom: 6px; }
+    .item-row input { padding: 6px 8px; font-size: 13px; }
+    .item-del {
+      border: none; background: #fee2e2; color: #b91c1c; border-radius: 6px;
+      cursor: pointer; height: 30px; font-size: 16px; line-height: 1;
+    }
+    .item-del:hover { background: #fecaca; }
+
+    .btn {
+      border: none; border-radius: 8px; padding: 9px 14px; font: inherit; font-weight: 600;
+      cursor: pointer; font-size: 14px;
+    }
+    .btn-primary { background: var(--brand); color: #fff; }
+    .btn-primary:hover { background: var(--brand-dark); }
+    .btn-ghost { background: #f1f5f9; color: var(--ink); }
+    .btn-ghost:hover { background: #e2e8f0; }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .add-item { background: #eef2ff; color: var(--brand); width: 100%; margin: 4px 0 8px; }
+    .add-item:hover { background: #e0e7ff; }
+
+    .saved-note { font-size: 12px; color: var(--ok); height: 16px; margin-top: 8px; }
+    .checkbox-field { display: flex; align-items: center; gap: 8px; }
+    .checkbox-field input { width: auto; }
+    .checkbox-field label { margin: 0; }
+
+    /* ---------- Preview (the printable document) ---------- */
+    .preview-wrap { padding: 28px; overflow-y: auto; max-height: 100vh; }
+    .paper {
+      background: var(--paper);
+      max-width: 820px;
+      margin: 0 auto;
+      box-shadow: 0 10px 40px rgba(15,23,42,.12);
+      border-radius: 6px;
+      padding: 56px 60px;
+      min-height: 1000px;
+    }
+    .doc-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      border-bottom: 3px solid var(--brand); padding-bottom: 20px; margin-bottom: 28px; gap: 20px;
+    }
+    .brand-block { max-width: 60%; }
+    .logo-img { max-height: 64px; max-width: 220px; margin-bottom: 8px; display: block; }
+    .biz-name { font-size: 24px; font-weight: 800; color: var(--brand-dark); margin: 0; }
+    .biz-tag { color: var(--muted); font-size: 13px; margin: 2px 0 0; }
+    .biz-contact { font-size: 12px; color: var(--muted); margin-top: 8px; white-space: pre-line; }
+    .doc-meta { text-align: right; font-size: 13px; }
+    .doc-meta .doc-type { font-size: 22px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+    .doc-meta div { margin-top: 2px; color: var(--muted); }
+    .doc-meta b { color: var(--ink); }
+
+    .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+    .parties h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--brand); margin: 0 0 6px; }
+    .parties .who { font-weight: 700; }
+    .parties .lines { font-size: 13px; color: var(--ink); white-space: pre-line; }
+
+    .doc-title { font-size: 20px; font-weight: 800; margin: 0 0 6px; }
+    .section { margin-bottom: 26px; }
+    .section h2 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--brand);
+      border-bottom: 1px solid var(--line); padding-bottom: 4px; margin: 0 0 10px;
+    }
+    .section .body { font-size: 14px; white-space: pre-line; }
+
+    table.items { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.items th {
+      text-align: left; background: var(--brand-dark); color: #fff; padding: 9px 10px; font-size: 12px;
+      text-transform: uppercase; letter-spacing: .03em;
+    }
+    table.items th.num, table.items td.num { text-align: right; white-space: nowrap; }
+    table.items td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    table.items tr:nth-child(even) td { background: #f8fafc; }
+    .totals { margin-top: 14px; margin-left: auto; width: 280px; font-size: 14px; }
+    .totals .line { display: flex; justify-content: space-between; padding: 5px 0; }
+    .totals .grand { border-top: 2px solid var(--brand); margin-top: 4px; padding-top: 8px; font-size: 17px; font-weight: 800; color: var(--brand-dark); }
+
+    .doc-foot { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; font-size: 12px; color: var(--muted); white-space: pre-line; }
+    .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 36px; }
+    .sign .slot { border-top: 1px solid var(--ink); padding-top: 6px; font-size: 12px; color: var(--muted); }
+
+    .empty-hint { color: var(--muted); font-style: italic; }
+
+    /* ---------- Print ---------- */
+    @media print {
+      .panel, .no-print { display: none !important; }
+      .app { display: block; }
+      .preview-wrap { padding: 0; max-height: none; overflow: visible; }
+      .paper { box-shadow: none; max-width: none; margin: 0; padding: 24px 28px; min-height: auto; border-radius: 0; }
+      body { background: #fff; }
+      table.items tr { page-break-inside: avoid; }
+      .section { page-break-inside: avoid; }
+    }
+    @media (max-width: 960px) {
+      .app { grid-template-columns: 1fr; }
+      .panel { position: static; max-height: none; }
+      .preview-wrap { max-height: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ============ FORM PANEL ============ -->
+    <aside class="panel no-print">
+      <h1>⚡ Proposal Generator</h1>
+      <p class="sub">Fill it in, watch it build on the right, then <b>Save as PDF</b>. Your business details are remembered on this device.</p>
+
+      <div class="btn-row" style="margin-bottom:18px;">
+        <button class="btn btn-primary" id="btn-print">⬇ Save as PDF</button>
+        <button class="btn btn-ghost" id="btn-new">New proposal</button>
+        <button class="btn btn-ghost" id="btn-clear">Reset all</button>
+      </div>
+      <div class="saved-note" id="saved-note"></div>
+
+      <form id="proposal-form" autocomplete="off">
+        <fieldset>
+          <legend>Your business</legend>
+          <div class="field">
+            <label for="bizName">Business name</label>
+            <input id="bizName" data-key="bizName" data-persist placeholder="mortgageMD" />
+          </div>
+          <div class="field">
+            <label for="bizTag">Tagline (optional)</label>
+            <input id="bizTag" data-key="bizTag" data-persist placeholder="Smarter home loans, made simple" />
+          </div>
+          <div class="field">
+            <label for="bizContact">Contact block (phone / email / ABN / licence)</label>
+            <textarea id="bizContact" data-key="bizContact" data-persist placeholder="Michael Dogan&#10;0400 000 000&#10;michael@mortgagemd.com.au&#10;ABN 00 000 000 000"></textarea>
+          </div>
+          <div class="field">
+            <label for="logo">Logo (optional)</label>
+            <input id="logo" type="file" accept="image/*" />
+            <div class="btn-row"><button type="button" class="btn btn-ghost" id="btn-logo-clear" style="font-size:12px;padding:5px 10px;">Remove logo</button></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Document</legend>
+          <div class="row">
+            <div class="field">
+              <label for="docType">Type</label>
+              <select id="docType" data-key="docType">
+                <option>Proposal</option>
+                <option>Quote</option>
+                <option>Estimate</option>
+                <option>Recommendation</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="docNumber">Reference #</label>
+              <input id="docNumber" data-key="docNumber" placeholder="P-0001" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="docDate">Date</label>
+              <input id="docDate" type="date" data-key="docDate" />
+            </div>
+            <div class="field">
+              <label for="docValid">Valid until</label>
+              <input id="docValid" type="date" data-key="docValid" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="docTitle">Proposal title</label>
+            <input id="docTitle" data-key="docTitle" placeholder="Home Loan Proposal" />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Client</legend>
+          <div class="field">
+            <label for="clientName">Client name</label>
+            <input id="clientName" data-key="clientName" placeholder="Jane & John Smith" />
+          </div>
+          <div class="field">
+            <label for="clientDetails">Client details (company / address / email)</label>
+            <textarea id="clientDetails" data-key="clientDetails" placeholder="123 Example St&#10;Melbourne VIC 3000&#10;jane@email.com"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Summary / introduction</legend>
+          <div class="field">
+            <textarea id="summary" data-key="summary" style="min-height:90px;" placeholder="A short opening paragraph to the client about what this proposal covers."></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Line items</legend>
+          <div class="items-head">
+            <span>Description</span><span>Qty</span><span>Unit $</span><span>Amount</span><span></span>
+          </div>
+          <div id="items-list"></div>
+          <button type="button" class="btn add-item" id="btn-add-item">＋ Add line item</button>
+
+          <div class="checkbox-field" style="margin-bottom:10px;">
+            <input type="checkbox" id="gstOn" data-key="gstOn" />
+            <label for="gstOn">Add GST</label>
+            <input id="gstRate" data-key="gstRate" style="width:70px;margin-left:auto;" value="10" /> <span style="font-size:12px;color:var(--muted)">%</span>
+          </div>
+          <div class="field">
+            <label for="currency">Currency symbol</label>
+            <input id="currency" data-key="currency" data-persist value="$" style="width:80px;" />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Scope / details</legend>
+          <div class="field">
+            <textarea id="scope" data-key="scope" style="min-height:90px;" placeholder="What's included, options, key recommendations, etc. One point per line."></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Terms &amp; notes</legend>
+          <div class="field">
+            <textarea id="terms" data-key="terms" data-persist placeholder="Payment terms, validity, assumptions, disclaimers."></textarea>
+          </div>
+          <div class="field">
+            <label for="footer">Footer / closing line</label>
+            <input id="footer" data-key="footer" data-persist placeholder="Thank you for the opportunity — I look forward to working with you." />
+          </div>
+          <div class="checkbox-field">
+            <input type="checkbox" id="signOn" data-key="signOn" />
+            <label for="signOn">Show signature lines</label>
+          </div>
+        </fieldset>
+      </form>
+    </aside>
+
+    <!-- ============ LIVE PREVIEW (printable) ============ -->
+    <main class="preview-wrap">
+      <div class="paper" id="paper">
+        <div class="doc-head">
+          <div class="brand-block">
+            <img class="logo-img" id="p-logo" alt="" style="display:none;" />
+            <p class="biz-name" id="p-bizName">Your Business</p>
+            <p class="biz-tag" id="p-bizTag"></p>
+            <div class="biz-contact" id="p-bizContact"></div>
+          </div>
+          <div class="doc-meta">
+            <div class="doc-type" id="p-docType">PROPOSAL</div>
+            <div id="p-docNumber"></div>
+            <div id="p-docDate"></div>
+            <div id="p-docValid"></div>
+          </div>
+        </div>
+
+        <div class="parties">
+          <div>
+            <h3>Prepared for</h3>
+            <div class="who" id="p-clientName">—</div>
+            <div class="lines" id="p-clientDetails"></div>
+          </div>
+          <div>
+            <h3>Prepared by</h3>
+            <div class="who" id="p-byName">—</div>
+            <div class="lines" id="p-byDetails"></div>
+          </div>
+        </div>
+
+        <h1 class="doc-title" id="p-docTitle"></h1>
+
+        <div class="section" id="sec-summary">
+          <div class="body" id="p-summary"></div>
+        </div>
+
+        <div class="section" id="sec-items">
+          <h2>Investment</h2>
+          <table class="items">
+            <thead>
+              <tr><th>Description</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Amount</th></tr>
+            </thead>
+            <tbody id="p-items"></tbody>
+          </table>
+          <div class="totals">
+            <div class="line"><span>Subtotal</span><span id="p-subtotal"></span></div>
+            <div class="line" id="p-gst-line"><span id="p-gst-label">GST</span><span id="p-gst"></span></div>
+            <div class="line grand"><span>Total</span><span id="p-total"></span></div>
+          </div>
+        </div>
+
+        <div class="section" id="sec-scope">
+          <h2>Scope &amp; details</h2>
+          <div class="body" id="p-scope"></div>
+        </div>
+
+        <div class="section" id="sec-terms">
+          <h2>Terms &amp; notes</h2>
+          <div class="body" id="p-terms"></div>
+        </div>
+
+        <div class="sign" id="p-sign" style="display:none;">
+          <div class="slot">Client signature &amp; date</div>
+          <div class="slot">For <span id="p-sign-biz"></span></div>
+        </div>
+
+        <div class="doc-foot" id="p-footer"></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+    var STORE = "proposalgen.v1";
+    var PERSIST = "proposalgen.business.v1"; // business details remembered separately
+    var form = document.getElementById("proposal-form");
+    var savedNote = document.getElementById("saved-note");
+    var logoData = null;
+
+    function $(id) { return document.getElementById(id); }
+    function esc(s) { return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+    function money(n, sym) {
+      sym = sym || "$";
+      var v = isFinite(n) ? n : 0;
+      return sym + v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function fmtDate(v) {
+      if (!v) return "";
+      var d = new Date(v + "T00:00:00");
+      if (isNaN(d)) return v;
+      return d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+    }
+
+    /* ---------- line items ---------- */
+    var itemsList = $("items-list");
+    function itemRow(d) {
+      d = d || {};
+      var row = document.createElement("div");
+      row.className = "item-row";
+      row.innerHTML =
+        '<input class="i-desc" placeholder="Description" />' +
+        '<input class="i-qty" type="number" min="0" step="any" value="1" />' +
+        '<input class="i-price" type="number" min="0" step="any" placeholder="0" />' +
+        '<input class="i-amt" readonly tabindex="-1" style="background:#f8fafc;" />' +
+        '<button type="button" class="item-del" title="Remove">×</button>';
+      row.querySelector(".i-desc").value = d.desc || "";
+      if (d.qty != null) row.querySelector(".i-qty").value = d.qty;
+      if (d.price != null) row.querySelector(".i-price").value = d.price;
+      row.querySelector(".item-del").addEventListener("click", function () {
+        row.remove(); render(); save();
+      });
+      row.addEventListener("input", function () { render(); save(); });
+      itemsList.appendChild(row);
+      return row;
+    }
+    function getItems() {
+      return Array.prototype.map.call(itemsList.querySelectorAll(".item-row"), function (r) {
+        var qty = parseFloat(r.querySelector(".i-qty").value) || 0;
+        var price = parseFloat(r.querySelector(".i-price").value) || 0;
+        var amt = qty * price;
+        r.querySelector(".i-amt").value = amt ? amt.toFixed(2) : "";
+        return { desc: r.querySelector(".i-desc").value, qty: qty, price: price, amt: amt };
+      });
+    }
+
+    /* ---------- render preview ---------- */
+    function render() {
+      var sym = $("currency").value || "$";
+
+      // business
+      $("p-bizName").textContent = $("bizName").value || "Your Business";
+      var tag = $("bizTag").value;
+      $("p-bizTag").textContent = tag; $("p-bizTag").style.display = tag ? "" : "none";
+      $("p-bizContact").textContent = $("bizContact").value;
+      $("p-byName").textContent = $("bizName").value || "—";
+      $("p-byDetails").textContent = $("bizContact").value;
+      $("p-sign-biz").textContent = $("bizName").value || "";
+
+      if (logoData) { $("p-logo").src = logoData; $("p-logo").style.display = "block"; }
+      else { $("p-logo").style.display = "none"; }
+
+      // meta
+      $("p-docType").textContent = ($("docType").value || "Proposal").toUpperCase();
+      var num = $("docNumber").value;
+      $("p-docNumber").innerHTML = num ? "<b>Ref:</b> " + esc(num) : "";
+      var dt = $("docDate").value;
+      $("p-docDate").innerHTML = dt ? "<b>Date:</b> " + esc(fmtDate(dt)) : "";
+      var vd = $("docValid").value;
+      $("p-docValid").innerHTML = vd ? "<b>Valid until:</b> " + esc(fmtDate(vd)) : "";
+
+      // client
+      $("p-clientName").textContent = $("clientName").value || "—";
+      $("p-clientDetails").textContent = $("clientDetails").value;
+
+      // title + summary
+      var title = $("docTitle").value;
+      $("p-docTitle").textContent = title; $("p-docTitle").style.display = title ? "" : "none";
+      var summary = $("summary").value;
+      $("p-summary").textContent = summary; $("sec-summary").style.display = summary ? "" : "none";
+
+      // items
+      var items = getItems();
+      var hasItems = items.some(function (i) { return i.desc || i.amt; });
+      var tbody = $("p-items");
+      tbody.innerHTML = "";
+      var subtotal = 0;
+      items.forEach(function (i) {
+        if (!i.desc && !i.amt) return;
+        subtotal += i.amt;
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+          "<td>" + esc(i.desc) + "</td>" +
+          '<td class="num">' + (i.qty || "") + "</td>" +
+          '<td class="num">' + (i.price ? money(i.price, sym) : "") + "</td>" +
+          '<td class="num">' + (i.amt ? money(i.amt, sym) : "") + "</td>";
+        tbody.appendChild(tr);
+      });
+      $("sec-items").style.display = hasItems ? "" : "none";
+
+      var gstOn = $("gstOn").checked;
+      var gstRate = parseFloat($("gstRate").value) || 0;
+      var gst = gstOn ? subtotal * gstRate / 100 : 0;
+      $("p-subtotal").textContent = money(subtotal, sym);
+      $("p-gst-line").style.display = gstOn ? "flex" : "none";
+      $("p-gst-label").textContent = "GST (" + gstRate + "%)";
+      $("p-gst").textContent = money(gst, sym);
+      $("p-total").textContent = money(subtotal + gst, sym);
+
+      // scope / terms
+      var scope = $("scope").value;
+      $("p-scope").textContent = scope; $("sec-scope").style.display = scope ? "" : "none";
+      var terms = $("terms").value;
+      $("p-terms").textContent = terms; $("sec-terms").style.display = terms ? "" : "none";
+
+      // footer / sign
+      $("p-footer").textContent = $("footer").value;
+      $("p-sign").style.display = $("signOn").checked ? "grid" : "none";
+    }
+
+    /* ---------- persistence ---------- */
+    var saveTimer;
+    function flashSaved() {
+      savedNote.textContent = "✓ Saved on this device";
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function () { savedNote.textContent = ""; }, 1500);
+    }
+    function collect() {
+      var data = { items: getItems(), logo: logoData };
+      form.querySelectorAll("[data-key]").forEach(function (el) {
+        data[el.dataset.key] = el.type === "checkbox" ? el.checked : el.value;
+      });
+      return data;
+    }
+    function save() {
+      try {
+        var data = collect();
+        localStorage.setItem(STORE, JSON.stringify(data));
+        // remember business-level fields separately so "New proposal" keeps them
+        var biz = {};
+        form.querySelectorAll("[data-persist]").forEach(function (el) { biz[el.dataset.key] = el.value; });
+        biz.logo = logoData;
+        localStorage.setItem(PERSIST, JSON.stringify(biz));
+        flashSaved();
+      } catch (e) { /* storage may be unavailable */ }
+    }
+    function apply(data, fieldsOnly) {
+      if (!data) return;
+      form.querySelectorAll("[data-key]").forEach(function (el) {
+        if (fieldsOnly && !el.hasAttribute("data-persist")) return;
+        if (!(el.dataset.key in data)) return;
+        if (el.type === "checkbox") el.checked = !!data[el.dataset.key];
+        else el.value = data[el.dataset.key];
+      });
+      if ("logo" in data) { logoData = data.logo || null; }
+      if (!fieldsOnly && data.items) {
+        itemsList.innerHTML = "";
+        data.items.forEach(itemRow);
+      }
+    }
+
+    /* ---------- buttons ---------- */
+    $("btn-add-item").addEventListener("click", function () { itemRow(); save(); });
+    $("btn-print").addEventListener("click", function () { render(); window.print(); });
+    $("btn-new").addEventListener("click", function () {
+      if (!confirm("Start a new proposal? Your business details and logo are kept; client + line items are cleared.")) return;
+      // clear non-persistent fields
+      form.querySelectorAll("[data-key]").forEach(function (el) {
+        if (el.hasAttribute("data-persist")) return;
+        if (el.type === "checkbox") el.checked = false;
+        else if (el.id === "currency") {} else el.value = "";
+      });
+      $("docType").value = "Proposal";
+      $("gstRate").value = "10";
+      itemsList.innerHTML = "";
+      itemRow();
+      localStorage.removeItem(STORE);
+      render();
+    });
+    $("btn-clear").addEventListener("click", function () {
+      if (!confirm("Reset everything including your saved business details? This cannot be undone.")) return;
+      localStorage.removeItem(STORE);
+      localStorage.removeItem(PERSIST);
+      location.reload();
+    });
+
+    // logo upload
+    $("logo").addEventListener("change", function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () { logoData = reader.result; render(); save(); };
+      reader.readAsDataURL(file);
+    });
+    $("btn-logo-clear").addEventListener("click", function () {
+      logoData = null; $("logo").value = ""; render(); save();
+    });
+
+    // live updates on any change
+    form.addEventListener("input", function () { render(); save(); });
+    form.addEventListener("change", function () { render(); save(); });
+
+    /* ---------- init ---------- */
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(STORE)); } catch (e) {}
+    if (saved) {
+      apply(saved);
+    } else {
+      // first run: pull in any remembered business details, set today's date
+      var biz = null;
+      try { biz = JSON.parse(localStorage.getItem(PERSIST)); } catch (e) {}
+      if (biz) apply(biz, true);
+      $("docDate").value = new Date().toISOString().slice(0, 10);
+      itemRow();
+    }
+    if (!itemsList.children.length) itemRow();
+    render();
+  })();
+  </script>
+</body>
+</html>
