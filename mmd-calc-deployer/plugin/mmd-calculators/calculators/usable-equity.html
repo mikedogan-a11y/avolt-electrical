@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Usable Equity Calculator — MortgageMD (preview)</title>
+  <link rel="stylesheet" href="../assets/css/mmd-calculators.css" />
+</head>
+<body class="mmd-preview">
+  <header data-mmd-header></header>
+
+  <main class="mmd-preview-main">
+    <!-- ===== EMBEDDABLE UNIT START (copy this section to embed) ===== -->
+    <section class="mmd-calc">
+      <div class="mmd-shell">
+        <span class="mmd-eyebrow">MortgageMD Calculator</span>
+        <h1 class="mmd-title"><span class="blue">Usable Equity</span> <span class="purple">Calculator</span></h1>
+        <p class="mmd-sub">Estimate how much equity you may be able to access from a property — for your next purchase, an investment, or a refinance — based on your target LVR.</p>
+
+        <div data-mmd-top></div>
+
+        <div class="mmd-grid">
+          <!-- INPUTS -->
+          <form class="mmd-panel" id="eq_form" novalidate>
+            <span class="mmd-panel__eyebrow">Inputs</span>
+            <h2 class="mmd-panel__h">Property details</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field mmd-field--full">
+                <label for="eq_value">Property value</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="eq_value" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field mmd-field--full">
+                <label for="eq_balance">Current loan balance</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="eq_balance" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field mmd-field--full">
+                <label for="eq_target">Target LVR</label>
+                <div class="mmd-input">
+                  <input type="text" inputmode="decimal" id="eq_target" placeholder="80" autocomplete="off" /><span class="mmd-input__suffix">%</span></div>
+              </div>
+            </div>
+            <p class="mmd-hint">Usable equity is estimated from the value you provide. Most lenders cap accessible equity around 80% LVR — above which LMI may apply. All figures are indicative.</p>
+
+            <div class="mmd-actions">
+              <button type="submit" class="mmd-btn mmd-btn--primary" id="eq_calc">Calculate</button>
+              <button type="button" class="mmd-btn mmd-btn--ghost" id="eq_reset">Reset</button>
+            </div>
+          </form>
+
+          <!-- RESULTS -->
+          <aside class="mmd-results">
+            <div class="mmd-panel" aria-live="polite">
+              <span class="mmd-panel__eyebrow">Your estimate</span>
+              <div class="mmd-hero">
+                <span class="mmd-hero__label">Estimated usable equity</span>
+                <span class="mmd-hero__value" id="eqr_usable">$0.00</span>
+                <span class="mmd-hero__hint" id="eqr_usablehint">Equity you may be able to access at your target LVR</span>
+              </div>
+              <div class="mmd-cards">
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Total equity (value − balance)</span>
+                  <span class="mmd-card__value" id="eqr_total">$0.00</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Current LVR</span>
+                  <span class="mmd-card__value" id="eqr_lvr">0.00%</span>
+                  <span class="mmd-meter"><span class="mmd-meter__fill" id="eqr_lvrmeter"></span></span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Target LVR used</span>
+                  <span class="mmd-card__value" id="eqr_target">80.00%</span>
+                </div>
+                <div class="mmd-card mmd-card--full">
+                  <span class="mmd-card__label">What this means</span>
+                  <span class="mmd-card__sub" id="eqr_note">Usable equity is the portion of your equity a lender may let you access at your target LVR — a valuation and full assessment will still apply.</span>
+                </div>
+              </div>
+              <div data-mmd-lead></div>
+              <p class="mmd-results-note">Estimate only — general information, not personal credit, financial, legal or tax advice.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div data-mmd-bottom></div>
+      </div>
+    </section>
+    <!-- ===== EMBEDDABLE UNIT END ===== -->
+  </main>
+
+  <footer data-mmd-footer></footer>
+
+  <script src="../assets/js/mmd-core.js"></script>
+  <script src="../assets/js/usable-equity.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>LMI &amp; LVR Calculator — MortgageMD (preview)</title>
+  <link rel="stylesheet" href="../assets/css/mmd-calculators.css" />
+</head>
+<body class="mmd-preview">
+  <header data-mmd-header></header>
+
+  <main class="mmd-preview-main">
+    <!-- ===== EMBEDDABLE UNIT START (copy this section to embed) ===== -->
+    <section class="mmd-calc">
+      <div class="mmd-shell">
+        <span class="mmd-eyebrow">MortgageMD Calculator</span>
+        <h1 class="mmd-title"><span class="blue">LMI &amp; LVR</span> <span class="purple">Calculator</span></h1>
+        <p class="mmd-sub">Estimate your loan-to-value ratio (LVR) and whether Lenders Mortgage Insurance (LMI) may apply — plus an indicative LMI cost range to plan around.</p>
+
+        <div data-mmd-top></div>
+
+        <div class="mmd-grid">
+          <!-- INPUTS -->
+          <form class="mmd-panel" id="ll_form" novalidate>
+            <span class="mmd-panel__eyebrow">Inputs</span>
+            <h2 class="mmd-panel__h">Loan &amp; property details</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field mmd-field--full">
+                <label for="ll_value">Property value</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="ll_value" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field mmd-field--full">
+                <label for="ll_price">Purchase price <span class="mmd-tag is-manual">optional</span></label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="ll_price" placeholder="Defaults to property value" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="ll_deposit">Deposit available</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="ll_deposit" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="ll_loan">Proposed loan amount</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="ll_loan" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="ll_state">State or territory</label>
+                <div class="mmd-select"><select id="ll_state"></select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="ll_purpose">Purpose</label>
+                <div class="mmd-select"><select id="ll_purpose">
+                  <option value="oo">Owner-occupier</option>
+                  <option value="inv">Investment</option>
+                </select></div>
+              </div>
+            </div>
+            <p class="mmd-hint">If you leave the purchase price blank we use your property value as the base. LMI shown is an indicative range only — confirm before relying on it.</p>
+
+            <div class="mmd-actions">
+              <button type="submit" class="mmd-btn mmd-btn--primary" id="ll_calc">Calculate</button>
+              <button type="button" class="mmd-btn mmd-btn--ghost" id="ll_reset">Reset</button>
+            </div>
+          </form>
+
+          <!-- RESULTS -->
+          <aside class="mmd-results">
+            <div class="mmd-panel" aria-live="polite">
+              <span class="mmd-panel__eyebrow">Your estimate</span>
+              <div class="mmd-hero">
+                <span class="mmd-hero__label">Estimated LVR</span>
+                <span class="mmd-hero__value" id="llr_lvr">0.00%</span>
+                <span class="mmd-hero__hint">Loan as a percentage of property value</span>
+                <span class="mmd-meter"><span class="mmd-meter__fill" id="llr_lvrmeter"></span></span>
+              </div>
+              <div class="mmd-cards">
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Deposit percentage</span>
+                  <span class="mmd-card__value" id="llr_deppct">0.00%</span>
+                  <span class="mmd-card__sub">Deposit as a % of property value</span>
+                </div>
+                <div class="mmd-card" id="llr_lmicard">
+                  <span class="mmd-card__label">Whether LMI may apply</span>
+                  <span class="mmd-card__value" id="llr_lmiflag" style="font-size:1.02rem">—</span>
+                </div>
+                <div class="mmd-card mmd-card--full">
+                  <span class="mmd-card__label">Estimated LMI range</span>
+                  <span class="mmd-card__value" id="llr_lmirange">$0.00</span>
+                  <span class="mmd-card__sub" id="llr_lmisub">Nil at or below 80% LVR</span>
+                </div>
+                <div class="mmd-card mmd-card--full" id="llr_notecard">
+                  <span class="mmd-card__label">Summary</span>
+                  <span class="mmd-card__value" id="llr_note" style="font-size:.92rem;font-weight:600;line-height:1.5">—</span>
+                </div>
+              </div>
+              <div data-mmd-lead></div>
+              <p class="mmd-results-note">Estimate only — general information, not personal credit, financial, legal or tax advice.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div data-mmd-bottom></div>
+      </div>
+    </section>
+    <!-- ===== EMBEDDABLE UNIT END ===== -->
+  </main>
+
+  <footer data-mmd-footer></footer>
+
+  <script src="../assets/js/mmd-core.js"></script>
+  <script src="../assets/js/lmi-lvr.js"></script>
+</body>
+</html>

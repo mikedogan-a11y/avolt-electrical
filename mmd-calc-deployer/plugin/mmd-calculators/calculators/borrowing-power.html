@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Borrowing Power Estimate — MortgageMD (preview)</title>
+  <link rel="stylesheet" href="../assets/css/mmd-calculators.css" />
+</head>
+<body class="mmd-preview">
+  <header data-mmd-header></header>
+
+  <main class="mmd-preview-main">
+    <!-- ===== EMBEDDABLE UNIT START (copy this section to embed) ===== -->
+    <section class="mmd-calc">
+      <div class="mmd-shell">
+        <span class="mmd-eyebrow">MortgageMD Calculator</span>
+        <h1 class="mmd-title"><span class="blue">Borrowing Power</span> <span class="purple">Estimate</span></h1>
+        <p class="mmd-sub">Get an indicative range for how much you may be able to borrow, based on your income, commitments and a serviceability buffer. A starting point only — not an approval.</p>
+
+        <div data-mmd-top></div>
+
+        <div class="mmd-grid">
+          <!-- INPUTS -->
+          <form class="mmd-panel" id="bp_form" novalidate>
+            <span class="mmd-panel__eyebrow">Inputs</span>
+            <h2 class="mmd-panel__h">Your situation</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field">
+                <label for="bp_applicants">Applicants</label>
+                <div class="mmd-select"><select id="bp_applicants">
+                  <option value="single">Single applicant</option>
+                  <option value="couple">Couple / two applicants</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_purpose">Purpose</label>
+                <div class="mmd-select"><select id="bp_purpose">
+                  <option value="oo">Owner-occupied</option>
+                  <option value="inv">Investment</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_income">Gross annual income (primary)</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bp_income" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_income2">Second applicant gross income</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bp_income2" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_incometype">Income type</label>
+                <div class="mmd-select"><select id="bp_incometype">
+                  <option value="payg">PAYG</option>
+                  <option value="self">Self-employed</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_dependants">Number of dependants</label>
+                <div class="mmd-select"><select id="bp_dependants">
+                  <option value="0">0</option><option value="1">1</option>
+                  <option value="2">2</option><option value="3">3</option>
+                  <option value="4">4</option><option value="5">5+</option>
+                </select></div>
+              </div>
+            </div>
+
+            <h2 class="mmd-panel__h mmd-panel__h--spaced">Income &amp; commitments</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field">
+                <label for="bp_expenses">Estimated monthly living expenses</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bp_expenses" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_cardlimits">Total credit card limits</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bp_cardlimits" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_othercommit">Other monthly loan / repayment commitments</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bp_othercommit" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_hecs">Monthly HECS / HELP repayment</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bp_hecs" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_rental">Rental income per month (if investment)</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bp_rental" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+            </div>
+
+            <h2 class="mmd-panel__h mmd-panel__h--spaced">Assessment settings</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field">
+                <label for="bp_rate">Interest rate (your product rate)</label>
+                <div class="mmd-input">
+                  <input type="text" inputmode="decimal" id="bp_rate" placeholder="6.50" autocomplete="off" /><span class="mmd-input__suffix">%</span></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_term">Loan term (years)</label>
+                <div class="mmd-input">
+                  <input type="text" inputmode="decimal" id="bp_term" placeholder="30" autocomplete="off" /><span class="mmd-input__suffix">yrs</span></div>
+              </div>
+              <div class="mmd-field">
+                <label for="bp_buffer">Serviceability buffer</label>
+                <div class="mmd-input">
+                  <input type="text" inputmode="decimal" id="bp_buffer" placeholder="3.00" autocomplete="off" /><span class="mmd-input__suffix">%</span></div>
+              </div>
+            </div>
+            <p class="mmd-hint">A serviceability buffer (default 3.00%, adjustable) is added to your rate and some income is shaded, in line with general lending practice. Figures are indicative only — a specific lender may assess higher or lower.</p>
+
+            <div class="mmd-actions">
+              <button type="submit" class="mmd-btn mmd-btn--primary" id="bp_calc">Calculate</button>
+              <button type="button" class="mmd-btn mmd-btn--ghost" id="bp_reset">Reset</button>
+            </div>
+          </form>
+
+          <!-- RESULTS -->
+          <aside class="mmd-results">
+            <div class="mmd-panel" aria-live="polite">
+              <span class="mmd-panel__eyebrow">Your estimate</span>
+              <div class="mmd-hero">
+                <span class="mmd-hero__label">Indicative borrowing range</span>
+                <span class="mmd-hero__value" id="bpr_range">$0 – $0</span>
+                <span class="mmd-hero__hint" id="bpr_rangehint">An indicative range only — not a single figure or an approval amount.</span>
+              </div>
+              <div class="mmd-cards">
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Estimated monthly surplus</span>
+                  <span class="mmd-card__value" id="bpr_surplus">$0.00</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Assessment rate used</span>
+                  <span class="mmd-card__value" id="bpr_assessrate">0.00%</span>
+                  <span class="mmd-card__sub">Includes a serviceability buffer</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Indicative max assessed repayment</span>
+                  <span class="mmd-card__value" id="bpr_maxrepay">$0.00</span>
+                  <span class="mmd-card__sub">Monthly — capacity used in the estimate</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Purpose</span>
+                  <span class="mmd-card__value" id="bpr_purpose">Owner-occupied</span>
+                </div>
+              </div>
+              <div data-mmd-lead></div>
+              <p class="mmd-results-note">Estimate only — general information, not personal credit advice.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div data-mmd-bottom></div>
+      </div>
+    </section>
+    <!-- ===== EMBEDDABLE UNIT END ===== -->
+  </main>
+
+  <footer data-mmd-footer></footer>
+
+  <script src="../assets/js/mmd-core.js"></script>
+  <script src="../assets/js/borrowing-power.js"></script>
+</body>
+</html>

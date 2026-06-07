@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>What's Reducing Your Borrowing Power — MortgageMD (preview)</title>
+  <link rel="stylesheet" href="../assets/css/mmd-calculators.css" />
+</head>
+<body class="mmd-preview">
+  <header data-mmd-header></header>
+
+  <main class="mmd-preview-main">
+    <!-- ===== EMBEDDABLE UNIT START (copy this section to embed) ===== -->
+    <section class="mmd-calc">
+      <div class="mmd-shell">
+        <span class="mmd-eyebrow">MortgageMD Calculator</span>
+        <h1 class="mmd-title"><span class="blue">What's Reducing Your</span> <span class="purple">Borrowing Power</span></h1>
+        <p class="mmd-sub">A general indication of what may be dragging down how much you can borrow — and a ranked list of the biggest contributors. This is not an exact borrowing-capacity figure.</p>
+
+        <div data-mmd-top></div>
+
+        <div class="mmd-grid">
+          <!-- INPUTS -->
+          <form class="mmd-panel" id="bd_form" novalidate>
+            <span class="mmd-panel__eyebrow">Inputs</span>
+            <h2 class="mmd-panel__h">Your commitments</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field mmd-field--full">
+                <label for="bd_cardlimits">Total credit card limits</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bd_cardlimits" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field mmd-field--full">
+                <label for="bd_facilities">Unused / other credit facility limits</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bd_facilities" placeholder="0.00" autocomplete="off" /></div>
+                <p class="mmd-hint">e.g. overdraft or line of credit limits — assessed on the limit, not the balance.</p>
+              </div>
+              <div class="mmd-field">
+                <label for="bd_carpersonal">Car / personal loan repayments</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bd_carpersonal" placeholder="0.00" autocomplete="off" /></div>
+                <p class="mmd-hint">Per month</p>
+              </div>
+              <div class="mmd-field">
+                <label for="bd_hecs">HECS / HELP repayment</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bd_hecs" placeholder="0.00" autocomplete="off" /></div>
+                <p class="mmd-hint">Per month</p>
+              </div>
+              <div class="mmd-field">
+                <label for="bd_other">Other existing loan repayments</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="bd_other" placeholder="0.00" autocomplete="off" /></div>
+                <p class="mmd-hint">Per month</p>
+              </div>
+              <div class="mmd-field">
+                <label for="bd_dependants">Number of dependants</label>
+                <div class="mmd-select"><select id="bd_dependants">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5+</option>
+                </select></div>
+              </div>
+            </div>
+            <p class="mmd-hint">Enter monthly repayment amounts where shown. All figures produce a general indication only — not an exact borrowing-capacity figure.</p>
+
+            <div class="mmd-actions">
+              <button type="submit" class="mmd-btn mmd-btn--primary" id="bd_calc">Calculate</button>
+              <button type="button" class="mmd-btn mmd-btn--ghost" id="bd_reset">Reset</button>
+            </div>
+          </form>
+
+          <!-- RESULTS -->
+          <aside class="mmd-results">
+            <div class="mmd-panel" aria-live="polite">
+              <span class="mmd-panel__eyebrow">Your indication</span>
+              <div class="mmd-hero">
+                <span class="mmd-hero__label">Estimated reduction in borrowing power</span>
+                <span class="mmd-hero__value" id="bdr_range">$0 &ndash; $0</span>
+                <span class="mmd-hero__hint">An indicative range only — depending on lender policy</span>
+              </div>
+              <div class="mmd-cards">
+                <div class="mmd-card mmd-card--full">
+                  <span class="mmd-card__label">Estimated monthly serviceability impact</span>
+                  <span class="mmd-card__value" id="bdr_monthly">$0.00 / month</span>
+                  <span class="mmd-card__sub">Indicative monthly amount used to estimate the range above</span>
+                </div>
+                <div class="mmd-card mmd-card--full">
+                  <span class="mmd-card__label">What's contributing most</span>
+                  <ul class="mmd-checklist" id="bdr_ranked"></ul>
+                </div>
+              </div>
+              <div data-mmd-lead></div>
+              <p class="mmd-results-note">General indication only — not personal credit, financial, legal or tax advice, and not an exact borrowing-capacity figure.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div data-mmd-bottom></div>
+      </div>
+    </section>
+    <!-- ===== EMBEDDABLE UNIT END ===== -->
+  </main>
+
+  <footer data-mmd-footer></footer>
+
+  <script src="../assets/js/mmd-core.js"></script>
+  <script src="../assets/js/borrowing-power-drag.js"></script>
+</body>
+</html>

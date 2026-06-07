@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Refinance Savings &amp; Break-Even Calculator — MortgageMD (preview)</title>
+  <link rel="stylesheet" href="../assets/css/mmd-calculators.css" />
+</head>
+<body class="mmd-preview">
+  <header data-mmd-header></header>
+
+  <main class="mmd-preview-main">
+    <!-- ===== EMBEDDABLE UNIT START (copy this section to embed) ===== -->
+    <section class="mmd-calc">
+      <div class="mmd-shell">
+        <span class="mmd-eyebrow">MortgageMD Calculator</span>
+        <h1 class="mmd-title"><span class="blue">Refinance Savings &amp;</span> <span class="purple">Break-Even</span></h1>
+        <p class="mmd-sub">See what switching your home loan could save each month, how long it may take to recover the switching costs, and your estimated saving over time — using the rates and costs you enter.</p>
+
+        <div data-mmd-top></div>
+
+        <div class="mmd-grid">
+          <!-- INPUTS -->
+          <form class="mmd-panel" id="rf_form" novalidate>
+            <span class="mmd-panel__eyebrow">Inputs</span>
+            <h2 class="mmd-panel__h">Your current loan</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field mmd-field--full">
+                <label for="rf_balance">Current loan balance</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="rf_balance" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="rf_currentrate">Current interest rate</label>
+                <div class="mmd-input"><input type="text" inputmode="decimal" id="rf_currentrate" placeholder="6.80" autocomplete="off" /><span class="mmd-input__suffix">%</span></div>
+              </div>
+              <div class="mmd-field">
+                <label for="rf_newrate">New indicative rate</label>
+                <div class="mmd-input"><input type="text" inputmode="decimal" id="rf_newrate" placeholder="6.10" autocomplete="off" /><span class="mmd-input__suffix">%</span></div>
+              </div>
+              <div class="mmd-field">
+                <label for="rf_term">Remaining loan term (years)</label>
+                <div class="mmd-input"><input type="text" inputmode="decimal" id="rf_term" placeholder="25" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="rf_repaytype">Repayment type</label>
+                <div class="mmd-select"><select id="rf_repaytype">
+                  <option value="pi">Principal &amp; interest</option>
+                  <option value="io">Interest only</option>
+                </select></div>
+              </div>
+            </div>
+
+            <h2 class="mmd-panel__h mmd-panel__h--spaced">Switching costs &amp; comparison</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field">
+                <label for="rf_switchcosts">Switching costs total</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="rf_switchcosts" placeholder="800.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="rf_cashback">Cashback (if any)</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="rf_cashback" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field mmd-field--full">
+                <label for="rf_period">Comparison period (years)</label>
+                <div class="mmd-input"><input type="text" inputmode="decimal" id="rf_period" placeholder="3" autocomplete="off" /></div>
+              </div>
+            </div>
+            <p class="mmd-hint">Switching costs typically include the discharge fee, government fees and any new loan fees. Estimates assume both rates stay constant and do not include every fee or the long-run cost of extending your loan term.</p>
+
+            <div class="mmd-actions">
+              <button type="submit" class="mmd-btn mmd-btn--primary" id="rf_calc">Calculate</button>
+              <button type="button" class="mmd-btn mmd-btn--ghost" id="rf_reset">Reset</button>
+            </div>
+          </form>
+
+          <!-- RESULTS -->
+          <aside class="mmd-results">
+            <div class="mmd-panel" aria-live="polite">
+              <span class="mmd-panel__eyebrow">Your estimate</span>
+              <div class="mmd-hero">
+                <span class="mmd-hero__label">Estimated monthly saving</span>
+                <span class="mmd-hero__value" id="rfr_saving">$0.00</span>
+                <span class="mmd-hero__hint" id="rfr_savinghint">Difference in repayments at the rates entered</span>
+              </div>
+              <div class="mmd-cards">
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Current repayment (monthly)</span>
+                  <span class="mmd-card__value" id="rfr_current">$0.00</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">New repayment (monthly)</span>
+                  <span class="mmd-card__value" id="rfr_new">$0.00</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Break-even point</span>
+                  <span class="mmd-card__value" id="rfr_breakeven">N/A</span>
+                  <span class="mmd-card__sub">Time to recover net switching costs</span>
+                </div>
+                <div class="mmd-card" id="rfr_totalcard">
+                  <span class="mmd-card__label" id="rfr_totallabel">Estimated total saving over 3 years</span>
+                  <span class="mmd-card__value" id="rfr_total">$0.00</span>
+                  <span class="mmd-card__sub">Net of switching costs and any cashback</span>
+                </div>
+              </div>
+              <div data-mmd-lead></div>
+              <p class="mmd-results-note">Estimate only — general information, not personal credit, financial, legal or tax advice.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div data-mmd-bottom></div>
+      </div>
+    </section>
+    <!-- ===== EMBEDDABLE UNIT END ===== -->
+  </main>
+
+  <footer data-mmd-footer></footer>
+
+  <script src="../assets/js/mmd-core.js"></script>
+  <script src="../assets/js/refinance-savings.js"></script>
+</body>
+</html>

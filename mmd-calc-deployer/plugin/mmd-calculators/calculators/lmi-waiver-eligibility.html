@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>LMI Waiver Eligibility Checker — MortgageMD (preview)</title>
+  <link rel="stylesheet" href="../assets/css/mmd-calculators.css" />
+</head>
+<body class="mmd-preview">
+  <header data-mmd-header></header>
+
+  <main class="mmd-preview-main">
+    <!-- ===== EMBEDDABLE UNIT START (copy this section to embed) ===== -->
+    <section class="mmd-calc">
+      <div class="mmd-shell">
+        <span class="mmd-eyebrow">MortgageMD Calculator</span>
+        <h1 class="mmd-title"><span class="blue">LMI Waiver</span> <span class="purple">Eligibility</span></h1>
+        <p class="mmd-sub">A discussion guide for professionals (doctors, lawyers, accountants, engineers and more) exploring a waived-LMI home loan. This is a conversation starter, not an eligibility decision or an offer of credit.</p>
+
+        <div data-mmd-top></div>
+
+        <div class="mmd-grid">
+          <!-- INPUTS -->
+          <form class="mmd-panel" id="lw_form" novalidate>
+            <span class="mmd-panel__eyebrow">Inputs</span>
+            <h2 class="mmd-panel__h">Your details</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field mmd-field--full">
+                <label for="lw_profession">Profession</label>
+                <div class="mmd-select"><select id="lw_profession">
+                  <option value="medical">Medical practitioner</option>
+                  <option value="dentist">Dentist</option>
+                  <option value="vet">Veterinarian</option>
+                  <option value="optometrist">Optometrist</option>
+                  <option value="pharmacist">Pharmacist</option>
+                  <option value="lawyer">Lawyer</option>
+                  <option value="accountant">Accountant</option>
+                  <option value="engineer">Engineer</option>
+                  <option value="other">Other</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="lw_member">Member of a relevant professional body?</label>
+                <div class="mmd-select"><select id="lw_member">
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="lw_income">Gross income range</label>
+                <div class="mmd-select"><select id="lw_income">
+                  <option value="u100">Under $100k</option>
+                  <option value="100to150">$100k–$150k</option>
+                  <option value="150to200">$150k–$200k</option>
+                  <option value="200plus">$200k+</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="lw_purpose">Purpose</label>
+                <div class="mmd-select"><select id="lw_purpose">
+                  <option value="oo">Owner-occupier</option>
+                  <option value="inv">Investment</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="lw_price">Purchase price</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="lw_price" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="lw_deposit">Deposit available</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="lw_deposit" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field mmd-field--full">
+                <label for="lw_loan">Proposed loan amount</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="lw_loan" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+            </div>
+            <p class="mmd-hint">This guide does not check any specific lender policy, postcode or security restriction. Whether an LMI waiver is available is always confirmed case-by-case.</p>
+
+            <div class="mmd-actions">
+              <button type="submit" class="mmd-btn mmd-btn--primary" id="lw_calc">Check discussion guide</button>
+              <button type="button" class="mmd-btn mmd-btn--ghost" id="lw_reset">Reset</button>
+            </div>
+          </form>
+
+          <!-- RESULTS -->
+          <aside class="mmd-results">
+            <div class="mmd-panel" aria-live="polite">
+              <span class="mmd-panel__eyebrow">Discussion guide</span>
+              <span class="mmd-band is-talk" id="lwr_band">Enter your details to see a discussion guide.</span>
+              <p class="mmd-results-note" id="lwr_para">You MAY be eligible for an LMI waiver depending on lender policy, your profession, income, LVR, property type and the overall strength of your application. Eligibility, the maximum LVR and which lenders offer a waiver all vary and change — this is a guide to start a conversation, not an assessment or an offer.</p>
+              <div class="mmd-cards">
+                <div class="mmd-card mmd-card--full">
+                  <span class="mmd-card__label">Estimated LVR</span>
+                  <span class="mmd-card__value" id="lwr_lvr">0.00%</span>
+                  <span class="mmd-meter"><span class="mmd-meter__fill" id="lwr_lvrmeter"></span></span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Profession noted</span>
+                  <span class="mmd-card__value" id="lwr_prof">—</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Income range noted</span>
+                  <span class="mmd-card__value" id="lwr_income">—</span>
+                </div>
+              </div>
+              <div data-mmd-lead></div>
+              <p class="mmd-results-note">Discussion guide only — general information, not personal credit advice, an assessment of eligibility, or an offer of credit.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div data-mmd-bottom></div>
+      </div>
+    </section>
+    <!-- ===== EMBEDDABLE UNIT END ===== -->
+  </main>
+
+  <footer data-mmd-footer></footer>
+
+  <script src="../assets/js/mmd-core.js"></script>
+  <script src="../assets/js/lmi-waiver-eligibility.js"></script>
+</body>
+</html>
