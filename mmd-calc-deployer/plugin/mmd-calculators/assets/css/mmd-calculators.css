@@ -1,0 +1,314 @@
+/* =========================================================
+   MortgageMD Calculators — shared design system
+   ---------------------------------------------------------
+   ALL rules are scoped under .mmd-calc so they will not bleed
+   into (or be overridden by) the WordPress theme. When embedding,
+   wrap each calculator in <div class="mmd-calc"> ... </div>.
+
+   Brand tokens approved by Michael Dogan.
+   ========================================================= */
+
+.mmd-calc {
+  --mmd-purple:      #5b5dbb;
+  --mmd-purple-dark: #4a4ca0;
+  --mmd-purple-soft: #eeeefb;
+  --mmd-blue:        #49a9e8;
+  --mmd-blue-soft:   #eaf5fd;
+  --mmd-navy:        #344054;
+  --mmd-bg:          #f3f5f8;
+  --mmd-white:       #ffffff;
+  --mmd-border:      #d9dee7;
+  --mmd-muted:       #667085;
+  --mmd-positive:    #1f7a55;
+  --mmd-positive-bg: #e9f6f0;
+  --mmd-caution:     #b5562a;   /* muted amber-brown — used for "review" states, NOT alarming red */
+  --mmd-caution-bg:  #fdf1ea;
+  --mmd-amber:       #8a5a00;
+  --mmd-amber-bg:    #fff4e5;
+  --mmd-radius:      18px;
+  --mmd-radius-md:   14px;
+  --mmd-radius-sm:   11px;
+  --mmd-shadow-sm:   0 1px 3px rgba(52,64,84,.06), 0 1px 2px rgba(52,64,84,.04);
+  --mmd-shadow:      0 8px 28px rgba(52,64,84,.08);
+  --mmd-ring:        0 0 0 4px rgba(91,93,187,.14);
+
+  color: var(--mmd-navy);
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.55;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+.mmd-calc *,
+.mmd-calc *::before,
+.mmd-calc *::after { box-sizing: border-box; }
+
+.mmd-calc a { color: var(--mmd-purple); }
+.mmd-calc .mmd-ico { width: 1em; height: 1em; fill: currentColor; flex: none; }
+.mmd-calc .mmd-shell { max-width: 1120px; margin: 0 auto; padding: 0 18px; }
+
+/* ---------- Prototype / status banner (optional) ---------- */
+.mmd-calc .mmd-proto-banner {
+  background: linear-gradient(90deg, var(--mmd-purple), var(--mmd-blue));
+  color: #fff; text-align: center; font-size: .82rem; padding: 9px 16px;
+  border-radius: var(--mmd-radius-sm); margin-bottom: 18px;
+}
+
+/* ---------- Heading ---------- */
+.mmd-calc .mmd-eyebrow {
+  display: inline-block; text-transform: uppercase; letter-spacing: 1.3px;
+  font-size: .7rem; font-weight: 700; color: var(--mmd-purple);
+  background: var(--mmd-purple-soft); padding: 6px 13px; border-radius: 999px;
+}
+.mmd-calc .mmd-title {
+  font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 800; line-height: 1.1;
+  margin: 14px 0 8px;
+}
+.mmd-calc .mmd-title .blue { color: var(--mmd-blue); }
+.mmd-calc .mmd-title .purple { color: var(--mmd-purple); }
+.mmd-calc .mmd-sub { font-size: 1.02rem; color: var(--mmd-muted); margin: 0 0 4px; max-width: 680px; }
+
+/* ---------- Top disclaimer ---------- */
+.mmd-calc .mmd-top-disclaimer {
+  display: flex; gap: 11px; align-items: flex-start;
+  background: linear-gradient(180deg, var(--mmd-blue-soft), #f6fbff);
+  border: 1px solid #cfe3f5; border-left: 4px solid var(--mmd-blue);
+  border-radius: var(--mmd-radius-md); padding: 14px 18px; margin: 22px 0 26px;
+}
+.mmd-calc .mmd-top-disclaimer .mmd-ico { color: var(--mmd-blue); font-size: 1.3rem; margin-top: 1px; }
+.mmd-calc .mmd-top-disclaimer p { margin: 0; font-size: .88rem; }
+
+/* ---------- Two-column calculator layout ---------- */
+.mmd-calc .mmd-grid {
+  display: grid; grid-template-columns: 1.12fr .88fr; gap: 24px; align-items: start;
+}
+.mmd-calc .mmd-panel {
+  background: var(--mmd-white); border: 1px solid var(--mmd-border);
+  border-radius: var(--mmd-radius); box-shadow: var(--mmd-shadow); padding: 26px 24px;
+}
+.mmd-calc .mmd-panel__eyebrow {
+  display: inline-block; text-transform: uppercase; letter-spacing: 1.1px;
+  font-size: .68rem; font-weight: 700; color: var(--mmd-blue); margin-bottom: 6px;
+}
+.mmd-calc .mmd-panel__h { margin: 6px 0 16px; font-size: 1.12rem; }
+.mmd-calc .mmd-panel__h--spaced { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--mmd-border); }
+
+/* ---------- Fields ---------- */
+.mmd-calc .mmd-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 15px; }
+.mmd-calc .mmd-field { min-width: 0; }
+.mmd-calc .mmd-field--full { grid-column: 1 / -1; }
+.mmd-calc .mmd-field label {
+  display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+  font-size: .84rem; font-weight: 600; margin-bottom: 6px;
+}
+.mmd-calc .mmd-input, .mmd-calc .mmd-select {
+  display: flex; align-items: center; background: var(--mmd-white);
+  border: 1.6px solid var(--mmd-border); border-radius: var(--mmd-radius-sm);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.mmd-calc .mmd-input:focus-within, .mmd-calc .mmd-select:focus-within {
+  border-color: var(--mmd-purple); box-shadow: var(--mmd-ring);
+}
+.mmd-calc .mmd-input__prefix, .mmd-calc .mmd-input__suffix {
+  padding: 0 12px; color: var(--mmd-muted); font-weight: 700; background: #f7f8fb;
+  align-self: stretch; display: flex; align-items: center;
+}
+.mmd-calc .mmd-input__prefix { border-right: 1px solid var(--mmd-border); border-radius: var(--mmd-radius-sm) 0 0 var(--mmd-radius-sm); }
+.mmd-calc .mmd-input__suffix { border-left: 1px solid var(--mmd-border); border-radius: 0 var(--mmd-radius-sm) var(--mmd-radius-sm) 0; }
+.mmd-calc .mmd-input input {
+  border: none; outline: none; padding: 11px 12px; font-size: 1rem; width: 100%;
+  color: var(--mmd-navy); background: transparent; min-width: 0; font-family: inherit;
+}
+.mmd-calc .mmd-input input::placeholder { color: #aab2c0; }
+.mmd-calc .mmd-select { position: relative; overflow: hidden; }
+.mmd-calc .mmd-select::after {
+  content: ""; position: absolute; right: 14px; top: 50%; width: 9px; height: 9px;
+  border-right: 2px solid var(--mmd-muted); border-bottom: 2px solid var(--mmd-muted);
+  transform: translateY(-65%) rotate(45deg); pointer-events: none;
+}
+.mmd-calc .mmd-select select {
+  appearance: none; -webkit-appearance: none; border: none; outline: none; background: transparent;
+  width: 100%; padding: 11px 36px 11px 12px; font-size: .95rem; color: var(--mmd-navy);
+  cursor: pointer; min-width: 0; font-family: inherit;
+}
+.mmd-calc .mmd-hint { font-size: .76rem; color: var(--mmd-muted); margin: 5px 0 0; }
+
+/* Auto / manual tag */
+.mmd-calc .mmd-tag {
+  font-size: .62rem; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
+  color: var(--mmd-blue); background: var(--mmd-blue-soft); border: 1px solid #cfe3f5;
+  padding: 2px 7px; border-radius: 999px;
+}
+.mmd-calc .mmd-tag.is-manual { color: var(--mmd-muted); background: #f1f2f5; border-color: var(--mmd-border); }
+
+/* Radio / toggle group */
+.mmd-calc .mmd-toggle { display: flex; gap: 8px; flex-wrap: wrap; }
+.mmd-calc .mmd-toggle label {
+  flex: 1 1 auto; text-align: center; border: 1.6px solid var(--mmd-border);
+  border-radius: var(--mmd-radius-sm); padding: 10px 12px; cursor: pointer; font-weight: 600;
+  font-size: .88rem; background: #fff; transition: all .12s ease; margin: 0;
+}
+.mmd-calc .mmd-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+.mmd-calc .mmd-toggle input:checked + span { color: #fff; }
+.mmd-calc .mmd-toggle label:has(input:checked) {
+  background: var(--mmd-purple); border-color: var(--mmd-purple); color: #fff;
+}
+
+/* ---------- Buttons ---------- */
+.mmd-calc .mmd-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: none; border-radius: 999px; padding: 12px 22px; font-size: .92rem; font-weight: 700;
+  cursor: pointer; text-decoration: none; line-height: 1; font-family: inherit;
+  transition: transform .06s ease, box-shadow .15s ease, background .15s ease, filter .15s ease;
+}
+.mmd-calc .mmd-btn:active { transform: translateY(1px); }
+.mmd-calc .mmd-btn--primary {
+  background: linear-gradient(135deg, var(--mmd-purple), #6f72d6); color: #fff;
+  box-shadow: 0 6px 16px rgba(91,93,187,.30);
+}
+.mmd-calc .mmd-btn--primary:hover { filter: brightness(1.05); }
+.mmd-calc .mmd-btn--ghost { background: #fff; color: var(--mmd-purple); border: 1.6px solid var(--mmd-purple); }
+.mmd-calc .mmd-btn--ghost:hover { background: var(--mmd-purple-soft); }
+.mmd-calc .mmd-btn--blue { background: #fff; color: var(--mmd-blue); border: 1.6px solid var(--mmd-blue); }
+.mmd-calc .mmd-btn--blue:hover { background: var(--mmd-blue-soft); }
+.mmd-calc .mmd-actions { display: flex; gap: 11px; margin-top: 22px; flex-wrap: wrap; }
+.mmd-calc .mmd-actions .mmd-btn { flex: 1 1 auto; }
+
+/* ---------- Results ---------- */
+.mmd-calc .mmd-results { position: sticky; top: 18px; }
+.mmd-calc .mmd-hero {
+  display: flex; flex-direction: column; gap: 5px; color: #fff; margin: 4px 0 16px;
+  background: linear-gradient(135deg, var(--mmd-purple) 0%, #5f74d6 50%, var(--mmd-blue) 120%);
+  border-radius: var(--mmd-radius-md); padding: 20px 22px; box-shadow: 0 10px 26px rgba(91,93,187,.26);
+}
+.mmd-calc .mmd-hero__label { font-size: .84rem; color: rgba(255,255,255,.92); font-weight: 600; }
+.mmd-calc .mmd-hero__value { font-size: 2rem; font-weight: 800; letter-spacing: -.5px; }
+.mmd-calc .mmd-hero__hint { font-size: .76rem; color: rgba(255,255,255,.82); }
+
+.mmd-calc .mmd-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+.mmd-calc .mmd-card {
+  position: relative; background: #fff; border: 1px solid var(--mmd-border);
+  border-radius: var(--mmd-radius-sm); padding: 14px 15px; display: flex; flex-direction: column;
+  gap: 4px; box-shadow: var(--mmd-shadow-sm);
+}
+.mmd-calc .mmd-card--full { grid-column: 1 / -1; }
+.mmd-calc .mmd-card__label { font-size: .77rem; color: var(--mmd-muted); font-weight: 600; }
+.mmd-calc .mmd-card__value { font-size: 1.28rem; font-weight: 800; letter-spacing: -.3px; }
+.mmd-calc .mmd-card__sub { font-size: .74rem; color: var(--mmd-muted); }
+.mmd-calc .mmd-card.is-positive { background: var(--mmd-positive-bg); border-color: #bfe4d3; }
+.mmd-calc .mmd-card.is-positive .mmd-card__value { color: var(--mmd-positive); }
+.mmd-calc .mmd-card.is-caution { background: var(--mmd-caution-bg); border-color: #f1d2c2; }
+.mmd-calc .mmd-card.is-caution .mmd-card__value { color: var(--mmd-caution); }
+
+.mmd-calc .mmd-meter { display: block; height: 6px; border-radius: 999px; background: #eceef3; overflow: hidden; margin-top: 5px; }
+.mmd-calc .mmd-meter__fill { display: block; height: 100%; width: 0%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--mmd-blue), var(--mmd-purple)); transition: width .3s ease; }
+
+/* Range / readiness band */
+.mmd-calc .mmd-band {
+  display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .92rem;
+  padding: 6px 12px; border-radius: 999px;
+}
+.mmd-calc .mmd-band.is-strong { background: var(--mmd-positive-bg); color: var(--mmd-positive); }
+.mmd-calc .mmd-band.is-review { background: var(--mmd-amber-bg); color: var(--mmd-amber); }
+.mmd-calc .mmd-band.is-talk   { background: var(--mmd-blue-soft); color: var(--mmd-purple-dark); }
+
+/* Checklist (readiness) */
+.mmd-calc .mmd-checklist { list-style: none; margin: 8px 0 0; padding: 0; }
+.mmd-calc .mmd-checklist li {
+  display: flex; gap: 9px; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--mmd-border);
+  font-size: .86rem;
+}
+.mmd-calc .mmd-checklist li:last-child { border-bottom: none; }
+.mmd-calc .mmd-checklist .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex: none; }
+.mmd-calc .mmd-checklist .dot.ok { background: var(--mmd-positive); }
+.mmd-calc .mmd-checklist .dot.warn { background: var(--mmd-amber); }
+.mmd-calc .mmd-checklist .dot.info { background: var(--mmd-blue); }
+
+/* ---------- Lead capture ---------- */
+.mmd-calc .mmd-lead {
+  margin-top: 18px; background: #f7f8fb; border: 1px solid var(--mmd-border);
+  border-radius: var(--mmd-radius-md); padding: 16px 16px;
+}
+.mmd-calc .mmd-lead__h { font-size: .95rem; font-weight: 700; margin: 0 0 4px; }
+.mmd-calc .mmd-lead__p { font-size: .8rem; color: var(--mmd-muted); margin: 0 0 11px; }
+.mmd-calc .mmd-lead__row { display: flex; gap: 9px; flex-wrap: wrap; }
+.mmd-calc .mmd-lead__row .mmd-input { flex: 1 1 200px; }
+.mmd-calc .mmd-consent { display: flex; gap: 9px; align-items: flex-start; font-size: .76rem; color: var(--mmd-muted); margin-top: 10px; }
+.mmd-calc .mmd-consent input { margin-top: 3px; }
+.mmd-calc .mmd-lead__msg { font-size: .8rem; margin-top: 9px; font-weight: 600; }
+.mmd-calc .mmd-lead__msg.ok { color: var(--mmd-positive); }
+.mmd-calc .mmd-lead__msg.err { color: var(--mmd-caution); }
+
+.mmd-calc .mmd-results-note { font-size: .77rem; color: var(--mmd-muted); margin: 16px 0 0; text-align: center; }
+
+/* ---------- Bottom disclaimers ---------- */
+.mmd-calc .mmd-disclaimers { margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.mmd-calc .mmd-disc {
+  background: #fff; border: 1px solid var(--mmd-border); border-radius: var(--mmd-radius-md);
+  box-shadow: var(--mmd-shadow-sm); padding: 20px 22px;
+}
+.mmd-calc .mmd-disc--full { grid-column: 1 / -1; }
+.mmd-calc .mmd-disc h3 { display: flex; align-items: center; gap: 9px; font-size: .98rem; margin: 0 0 10px; }
+.mmd-calc .mmd-disc h3 .dot { width: 9px; height: 9px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--mmd-purple), var(--mmd-blue)); flex: none; }
+.mmd-calc .mmd-disc p, .mmd-calc .mmd-disc li { font-size: .84rem; }
+.mmd-calc .mmd-disc p { margin: 0 0 8px; }
+.mmd-calc .mmd-disc ul { margin: 0; padding-left: 18px; }
+.mmd-calc .mmd-disc li { margin-bottom: 5px; }
+.mmd-calc .mmd-disc li::marker { color: var(--mmd-purple); }
+.mmd-calc .mmd-comparison-warning {
+  background: var(--mmd-amber-bg); border: 1px solid #f0d8a8; border-radius: var(--mmd-radius-sm);
+  padding: 12px 15px; font-size: .8rem; color: var(--mmd-amber); margin-top: 14px;
+}
+.mmd-calc .mmd-acl { font-size: .78rem; color: var(--mmd-muted); margin-top: 16px; text-align: center; }
+
+/* ---------- Hub ---------- */
+.mmd-calc .mmd-hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; }
+.mmd-calc .mmd-hub-card {
+  display: flex; flex-direction: column; gap: 8px; background: #fff; border: 1px solid var(--mmd-border);
+  border-radius: var(--mmd-radius-md); box-shadow: var(--mmd-shadow-sm); padding: 22px 20px;
+  text-decoration: none; color: inherit; transition: transform .1s ease, box-shadow .15s ease;
+}
+.mmd-calc .mmd-hub-card:hover { transform: translateY(-3px); box-shadow: var(--mmd-shadow); }
+.mmd-calc .mmd-hub-card__badge {
+  align-self: flex-start; font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .6px;
+  color: var(--mmd-purple); background: var(--mmd-purple-soft); padding: 4px 9px; border-radius: 999px;
+}
+.mmd-calc .mmd-hub-card__h { font-size: 1.06rem; font-weight: 800; margin: 0; }
+.mmd-calc .mmd-hub-card__p { font-size: .84rem; color: var(--mmd-muted); margin: 0; flex: 1 1 auto; }
+.mmd-calc .mmd-hub-card__cta { font-size: .82rem; font-weight: 700; color: var(--mmd-purple); }
+.mmd-calc .mmd-hub-section-h { font-size: 1.1rem; font-weight: 800; margin: 30px 0 4px; }
+.mmd-calc .mmd-hub-section-h .muted { color: var(--mmd-muted); font-weight: 600; font-size: .85rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .mmd-calc .mmd-grid { grid-template-columns: 1fr; }
+  .mmd-calc .mmd-results { position: static; }
+  .mmd-calc .mmd-hub-grid { grid-template-columns: 1fr 1fr; }
+  .mmd-calc .mmd-disclaimers { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .mmd-calc .mmd-fields { grid-template-columns: 1fr; }
+  .mmd-calc .mmd-cards { grid-template-columns: 1fr; }
+  .mmd-calc .mmd-hub-grid { grid-template-columns: 1fr; }
+  .mmd-calc .mmd-actions { flex-direction: column; }
+}
+
+/* =========================================================
+   PREVIEW CHROME — standalone review pages only.
+   NOT part of the embeddable calculator. Drop when integrating.
+   ========================================================= */
+body.mmd-preview { margin: 0; background:
+  radial-gradient(1100px 460px at 82% -8%, rgba(73,169,232,.10), transparent 60%),
+  radial-gradient(900px 460px at -8% 0%, rgba(91,93,187,.10), transparent 55%), #f3f5f8;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+.mmd-preview-bar { background: linear-gradient(90deg,#5b5dbb,#49a9e8); color:#fff; text-align:center;
+  font-size:.8rem; padding:8px 16px; font-weight:600; }
+.mmd-preview-head { max-width:1120px; margin:0 auto; padding:14px 18px; display:flex; align-items:center;
+  gap:16px; flex-wrap:wrap; }
+.mmd-logo { display:inline-flex; align-items:center; }
+.mmd-preview-contact { margin-right:auto; font-size:.85rem; color:#667085; }
+.mmd-preview-contact a { color:#344054; text-decoration:none; font-weight:600; }
+.mmd-preview-foot { background:#344054; color:#cdd5e0; text-align:center; padding:26px 18px; margin-top:40px; }
+.mmd-preview-main { padding: 26px 0 10px; }

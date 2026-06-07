@@ -1,0 +1,52 @@
+### MortgageMD calculators — end-to-end deploy demo
+------------------------------------------------------------
+→ assembling clean WordPress…
+→ installing WordPress + activating plugin…
+  ✓ WordPress installed, plugin activated, app password issued
+  ✓ server up and REST responding on :9800
+------------------------------------------------------------
+### Deploy two calculators over the REST API (Prajwol's manual steps, automated)
+------------------------------------------------------------
+  → Deploying "home-loan-repayment" to http://127.0.0.1:9800
+    created page #4
+    URL:   http://127.0.0.1:9800/?page_id=4
+    slug:  home-loan-repayment-calculator
+    SEO title:    Home Loan Repayment Calculator | MortgageMD
+    SEO meta:     Estimate your home loan repayments and see how extra repayments or a lump sum could cut your interest and pay your loan off sooner. Free, indicative tool.
+    focus kw:     home loan repayment calculator
+  RESULT_JSON={"id":4,"link":"http://127.0.0.1:9800/?page_id=4","slug":"home-loan-repayment-calculator","meta":{"rank_math_title":"Home Loan Repayment Calculator | MortgageMD","rank_math_description":"Estimate your home loan repayments and see how extra repayments or a lump sum could cut your interest and pay your loan off sooner. Free, indicative tool.","rank_math_focus_keyword":"home loan repayment calculator","footnotes":""}}
+  → Deploying "lmi-lvr" to http://127.0.0.1:9800
+    created page #5
+    URL:   http://127.0.0.1:9800/?page_id=5
+    slug:  lmi-lvr-calculator
+    SEO title:    LMI & LVR Calculator | MortgageMD
+    SEO meta:     Work out your loan-to-value ratio (LVR) and estimate Lenders Mortgage Insurance (LMI) on your purchase. Free, indicative tool.
+    focus kw:     lmi lvr calculator
+  RESULT_JSON={"id":5,"link":"http://127.0.0.1:9800/?page_id=5","slug":"lmi-lvr-calculator","meta":{"rank_math_title":"LMI & LVR Calculator | MortgageMD","rank_math_description":"Work out your loan-to-value ratio (LVR) and estimate Lenders Mortgage Insurance (LMI) on your purchase. Free, indicative tool.","rank_math_focus_keyword":"lmi lvr calculator","footnotes":""}}
+------------------------------------------------------------
+### Verify the live page
+------------------------------------------------------------
+  ✓ calculator markup rendered on the page
+  ✓ assets enqueued, core loads before calculator (SG-Optimizer safe)
+  ✓ server-side lead hook wired into the page
+  ✓ Rank Math SEO title/meta set via API
+------------------------------------------------------------
+### Capture a lead end-to-end
+------------------------------------------------------------
+  ✓ lead captured server-side with CRM tag
+      {"received_at":"2026-06-07T09:19:33+00:00","event":"mmd_lead_email","calculator":"repayments","leadTag":"Calculator - Repayments","email":"demo.lead@example.com","consent":true,"data":{"loan":650000,"rate":6.5}}
+------------------------------------------------------------
+### Verify the calculator actually computes (real JS, embedded markup)
+------------------------------------------------------------
+  --- Functional test: Home Loan Repayment ---
+    Disclaimer injected by core: yes
+    Scenario: $650,000 @ 6.50% over 30y, P&I, monthly
+    → Monthly repayment: $4,108.44
+    → Total interest:    $829,039.17
+    → Total repaid:      $1,479,039.17
+    ✓ computes correctly inside the embedded markup
+  ✓ computes correctly inside the embedded markup
+------------------------------------------------------------
+### RESULT: 8 passed, 0 failed
+------------------------------------------------------------
+PASS — the plugin + deploy app reproduces every per-calculator task end-to-end.

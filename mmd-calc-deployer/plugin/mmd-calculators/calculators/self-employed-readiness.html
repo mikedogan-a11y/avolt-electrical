@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Self-Employed Readiness Check — MortgageMD (preview)</title>
+  <link rel="stylesheet" href="../assets/css/mmd-calculators.css" />
+</head>
+<body class="mmd-preview">
+  <header data-mmd-header></header>
+
+  <main class="mmd-preview-main">
+    <!-- ===== EMBEDDABLE UNIT START (copy this section to embed) ===== -->
+    <section class="mmd-calc">
+      <div class="mmd-shell">
+        <span class="mmd-eyebrow">MortgageMD Calculator</span>
+        <h1 class="mmd-title"><span class="blue">Self-Employed</span> <span class="purple">Readiness Check</span></h1>
+        <p class="mmd-sub">A quick indication of how ready your self-employed income documentation may be for a home loan conversation. This estimates documentation readiness only — it does not produce a dollar amount, borrowing capacity or eligibility.</p>
+
+        <div data-mmd-top></div>
+
+        <div class="mmd-grid">
+          <!-- INPUTS -->
+          <form class="mmd-panel" id="se_form" novalidate>
+            <span class="mmd-panel__eyebrow">Inputs</span>
+            <h2 class="mmd-panel__h">Your business &amp; documentation</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field">
+                <label for="se_abn">ABN age</label>
+                <div class="mmd-select"><select id="se_abn">
+                  <option value="under1">Under 1 year</option>
+                  <option value="1to2">1–2 years</option>
+                  <option value="2plus">2+ years</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="se_gst">GST registered</label>
+                <div class="mmd-select"><select id="se_gst">
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                  <option value="na">Not applicable</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="se_structure">Business structure</label>
+                <div class="mmd-select"><select id="se_structure">
+                  <option value="sole">Sole trader</option>
+                  <option value="company">Company</option>
+                  <option value="trust">Trust</option>
+                  <option value="partnership">Partnership</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="se_returns">Latest tax returns available</label>
+                <div class="mmd-select"><select id="se_returns">
+                  <option value="none">None</option>
+                  <option value="1">1 year</option>
+                  <option value="2">2 years</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="se_bas">BAS available</label>
+                <div class="mmd-select"><select id="se_bas">
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="se_acct">Accountant letter available</label>
+                <div class="mmd-select"><select id="se_acct">
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select></div>
+              </div>
+              <div class="mmd-field mmd-field--full">
+                <label for="se_ato">ATO debt or payment plan</label>
+                <div class="mmd-select"><select id="se_ato">
+                  <option value="none">None</option>
+                  <option value="plan">On a payment plan</option>
+                  <option value="overdue">Overdue debt</option>
+                </select></div>
+              </div>
+            </div>
+
+            <h2 class="mmd-panel__h mmd-panel__h--spaced">Add-backs present</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field mmd-field--full">
+                <label class="mmd-consent" style="font-size:.86rem;color:var(--mmd-navy);font-weight:600;">
+                  <input type="checkbox" id="se_dep"> Depreciation</label>
+                <label class="mmd-consent" style="font-size:.86rem;color:var(--mmd-navy);font-weight:600;">
+                  <input type="checkbox" id="se_int"> Interest</label>
+                <label class="mmd-consent" style="font-size:.86rem;color:var(--mmd-navy);font-weight:600;">
+                  <input type="checkbox" id="se_oneoff"> One-off expenses</label>
+              </div>
+            </div>
+            <p class="mmd-hint">Add-backs are noted for discussion only — whether they can be used depends on lender policy and your accountant's figures. They do not change your readiness score.</p>
+
+            <div class="mmd-actions">
+              <button type="submit" class="mmd-btn mmd-btn--primary" id="se_check">Check readiness</button>
+              <button type="button" class="mmd-btn mmd-btn--ghost" id="se_reset">Reset</button>
+            </div>
+          </form>
+
+          <!-- RESULTS -->
+          <aside class="mmd-results">
+            <div class="mmd-panel" aria-live="polite">
+              <span class="mmd-panel__eyebrow">Your readiness</span>
+              <div style="margin:6px 0 6px;">
+                <span class="mmd-band is-review" id="ser_band">Further review required</span>
+              </div>
+              <p class="mmd-sub" id="ser_summary" style="margin:6px 0 4px;font-size:.9rem;">Answer the questions to see an indication of your documentation readiness.</p>
+              <ul class="mmd-checklist" id="ser_checklist"></ul>
+              <div data-mmd-lead></div>
+              <p class="mmd-results-note">Documentation-readiness indication only — general information, not personal credit, financial, legal or tax advice. It does not assess income amount, serviceability or eligibility.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div data-mmd-bottom></div>
+      </div>
+    </section>
+    <!-- ===== EMBEDDABLE UNIT END ===== -->
+  </main>
+
+  <footer data-mmd-footer></footer>
+
+  <script src="../assets/js/mmd-core.js"></script>
+  <script src="../assets/js/self-employed-readiness.js"></script>
+</body>
+</html>

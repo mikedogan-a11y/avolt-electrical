@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Purchase Costs Calculator — MortgageMD (preview)</title>
+  <link rel="stylesheet" href="../assets/css/mmd-calculators.css" />
+</head>
+<body class="mmd-preview">
+  <header data-mmd-header></header>
+
+  <main class="mmd-preview-main">
+    <!-- ===== EMBEDDABLE UNIT START (copy this section to embed) ===== -->
+    <section class="mmd-calc">
+      <div class="mmd-shell">
+        <span class="mmd-eyebrow">MortgageMD Calculator</span>
+        <h1 class="mmd-title"><span class="blue">Purchase Costs</span> <span class="purple">Calculator</span></h1>
+        <p class="mmd-sub">Estimate the real cash you may need to complete a property purchase — stamp duty, government fees, LMI and other upfront costs.</p>
+
+        <div data-mmd-top></div>
+
+        <div class="mmd-grid">
+          <!-- INPUTS -->
+          <form class="mmd-panel" id="pc_form" novalidate>
+            <span class="mmd-panel__eyebrow">Inputs</span>
+            <h2 class="mmd-panel__h">Purchase details</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field mmd-field--full">
+                <label for="pc_price">Purchase price</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="pc_price" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="pc_state">State or territory</label>
+                <div class="mmd-select"><select id="pc_state"></select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="pc_purpose">Purpose</label>
+                <div class="mmd-select"><select id="pc_purpose">
+                  <option value="oo">Owner-occupier</option>
+                  <option value="inv">Investment</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="pc_fhb">Eligible first home buyer?</label>
+                <div class="mmd-select"><select id="pc_fhb">
+                  <option value="no">No</option><option value="yes">Yes</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="pc_proptype">Property type</label>
+                <div class="mmd-select"><select id="pc_proptype">
+                  <option value="established">Established</option>
+                  <option value="new">New build / off-the-plan</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="pc_foreign">Foreign purchaser?</label>
+                <div class="mmd-select"><select id="pc_foreign">
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select></div>
+              </div>
+              <div class="mmd-field">
+                <label for="pc_deposit">Savings / deposit available</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="pc_deposit" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field mmd-field--full">
+                <label for="pc_loan">Proposed loan amount</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="pc_loan" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+            </div>
+
+            <h2 class="mmd-panel__h mmd-panel__h--spaced">Other upfront costs</h2>
+            <div class="mmd-fields">
+              <div class="mmd-field">
+                <label for="pc_conveyancing">Conveyancing / legal</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="pc_conveyancing" placeholder="1,800.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field">
+                <label for="pc_lenderfees">Lender / application fees</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="pc_lenderfees" placeholder="600.00" autocomplete="off" /></div>
+              </div>
+              <div class="mmd-field mmd-field--full">
+                <label for="pc_other">Other costs (inspections, etc.)</label>
+                <div class="mmd-input"><span class="mmd-input__prefix">$</span>
+                  <input type="text" inputmode="decimal" id="pc_other" placeholder="0.00" autocomplete="off" /></div>
+              </div>
+            </div>
+            <p class="mmd-hint">Stamp duty, government fees and any LMI are estimated for you from the details above. All figures are indicative — confirm before relying on them.</p>
+
+            <div class="mmd-actions">
+              <button type="submit" class="mmd-btn mmd-btn--primary" id="pc_calc">Calculate</button>
+              <button type="button" class="mmd-btn mmd-btn--ghost" id="pc_reset">Reset</button>
+            </div>
+          </form>
+
+          <!-- RESULTS -->
+          <aside class="mmd-results">
+            <div class="mmd-panel" aria-live="polite">
+              <span class="mmd-panel__eyebrow">Your estimate</span>
+              <div class="mmd-hero">
+                <span class="mmd-hero__label">Estimated total funds required</span>
+                <span class="mmd-hero__value" id="pcr_funds">$0.00</span>
+                <span class="mmd-hero__hint">Cash needed to complete (deposit + costs, less your loan)</span>
+              </div>
+              <div class="mmd-cards">
+                <div class="mmd-card mmd-card--full">
+                  <span class="mmd-card__label">Total purchase costs (price + upfront)</span>
+                  <span class="mmd-card__value" id="pcr_total">$0.00</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Estimated stamp duty</span>
+                  <span class="mmd-card__value" id="pcr_stamp">$0.00</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Government fees</span>
+                  <span class="mmd-card__value" id="pcr_gov">$0.00</span>
+                  <span class="mmd-card__sub" id="pcr_govsub">Transfer + registration</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Estimated LMI</span>
+                  <span class="mmd-card__value" id="pcr_lmi">$0.00</span>
+                  <span class="mmd-card__sub" id="pcr_lmisub">Nil at or below 80% LVR</span>
+                </div>
+                <div class="mmd-card">
+                  <span class="mmd-card__label">Estimated LVR</span>
+                  <span class="mmd-card__value" id="pcr_lvr">0.00%</span>
+                  <span class="mmd-meter"><span class="mmd-meter__fill" id="pcr_lvrmeter"></span></span>
+                </div>
+                <div class="mmd-card mmd-card--full" id="pcr_surcard">
+                  <span class="mmd-card__label" id="pcr_surlabel">Surplus / shortfall vs your savings</span>
+                  <span class="mmd-card__value" id="pcr_sur">$0.00</span>
+                </div>
+              </div>
+              <div data-mmd-lead></div>
+              <p class="mmd-results-note">Estimate only — general information, not personal credit, financial, legal or tax advice.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div data-mmd-bottom></div>
+      </div>
+    </section>
+    <!-- ===== EMBEDDABLE UNIT END ===== -->
+  </main>
+
+  <footer data-mmd-footer></footer>
+
+  <script src="../assets/js/mmd-core.js"></script>
+  <script src="../assets/js/purchase-costs.js"></script>
+</body>
+</html>
